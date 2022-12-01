@@ -41,6 +41,7 @@ def guess():
            f"src='https://media.giphy.com/media/3o7aCSPqXE5C6T8tBC/giphy.gif'>"
 
 
+# todo see if you can add too high, too low or right!
 @app.route('/<int:num>')
 def num_generator(num):
     gen = random.randint(0, 9)
