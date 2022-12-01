@@ -1,27 +1,37 @@
-import time
+from flask import Flask
+
+app = Flask(__name__)
 
 
-def speed_calc_decorator(function):
+# Decorators for various repeated stuff
+def make_bold(bold):
     def wrapper_function():
-        start = time.time()
-        function()
-        end = time.time()
-        print(f"{function.__name__} run speed is {end - start}")
+        return f"<b>{bold()}</b>"
 
     return wrapper_function
 
 
-@speed_calc_decorator
-def fast_function():
-    for i in range(10000000):
-        i * i
+def make_emphasis(emphasis):
+    def wrapper_function():
+        return f"<em>{emphasis()}</em>"
+
+    return wrapper_function
 
 
-@speed_calc_decorator
-def slow_function():
-    for i in range(100000000):
-        i * i
+def make_underline(underline):
+    def wrapper_function():
+        return f"<u>{underline()}</u>"
+
+    return wrapper_function
 
 
-fast_function()
-slow_function()
+@app.route('/')
+@make_bold
+@make_underline
+@make_emphasis
+def hello():
+    return "<h1>Hello There how are you?</h1>"
+
+
+if __name__ == "__main__":
+    app.run(port=5001, debug=True)
